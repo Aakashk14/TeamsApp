@@ -1,0 +1,467 @@
+<html>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+                        const socket = io();
+
+                        
+
+
+$(document).ready(function(){
+     var a = document.cookie.split(";")
+ 
+ for(let i=0;i<a.length;i++){
+let t = a[i].split("=")
+if(t[0].trim()=="boss"){
+a = t[1].split("%40")[0]
+}
+ }
+
+
+
+
+    document.querySelector("#groupname").value = location.pathname.split("/")[2]
+
+    socket.on("new message",(data)=>{
+
+      
+
+        if(data.file && data.message){
+            let n = document.createElement("name");
+    n.innerText=data.name;
+            let t = location.pathname.split("/")[2]
+    let elm_p = document.createElement("p");
+let element_p2 = document.createElement("p");
+elm_p.setAttribute("id","from")
+element_p2.setAttribute("id","from")
+elm_p.innerText=data.message;
+element_p2.innerText=data.file;
+elm_img = document.createElement("a");
+let tmp  = "/users/"+a+t+data.file;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+let elm = document.querySelector(".Discussion")
+
+clm.append(n)
+elm.append(elm_img)
+elm.append(elm_p)
+
+}
+        if(data.file){
+            let n = document.createElement("name");
+    n.innerText=data.name;
+
+let t = location.pathname.split("/")[2]
+elm_img = document.createElement("a");
+let element_p2 = document.createElement("p");
+element_p2.setAttribute("id","from")
+
+let tmp  = "/users/"+a+t+data.file;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+element_p2.innerText=data.file;
+elm_img.append(element_p2)
+let elm = document.querySelector(".Discussion");
+elm.append(n)
+elm.append(elm_img)
+        }
+        else{
+            let n = document.createElement("name");
+    n.innerText=data.name;
+            let elm_p = document.createElement("p");
+            let elm_p2 = document.createElement("p")
+            elm_p2.setAttribute("id","name");
+            
+elm_p.setAttribute("id","from")
+elm_p.innerText=data.message;
+elm_p2.innerText=data.name;
+let elm = document.querySelector(".Discussion");
+elm.append(n)
+elm.append(elm_p2);
+elm.append(elm_p)
+        }
+
+    })
+
+
+// Aakash | k14 divisor
+
+
+
+
+
+var x = document.querySelector(".Discussion");
+x.scrollTop = x.scrollHeight;
+
+
+$("#open").on('click',function(){
+    
+    console.log("clicked")
+    let pt = location.pathname.split("/")[2]
+    socket.emit("new meeting",pt)
+
+    
+
+$("#frm2").submit()
+})
+
+$("#frm2").on('submit',function(){
+})
+$("#end").on('click',function(){
+alert("ending")
+    let group=location.pathname.split("/")[2]
+    
+    socket.emit("close con",(group))
+    location.reload();
+
+    
+})
+$("#show_n").on('click',function(){
+
+    console.log("clicked")
+    $(".showNotifications").toggle();
+    
+
+}
+)
+$("#add_user").on('click',function(){
+
+})
+
+$("#showmefiles").on('click',function(){
+    let p = location.pathname.split("/")[2];
+    location.href=p+"/files";
+})
+
+$("#upload").on('click',function(){
+$("input[id='up_file']").click();
+})
+$("#del").on('click',function(){
+			console.log("clicked")
+			
+		   let y = location.pathname.split("/")[2]
+		   let sendto={};
+		   sendto.value=y;
+		   $.ajax({
+				url:"http://127.0.0.1:3000/delgroup",
+				type:"POST",
+				data:sendto,
+				success:function(result){
+					 if(result=="done"){
+						 console.log(result)
+						 window.location="/homepage"
+					 }
+
+
+		}})
+	})
+
+$("#remove").on('click',function(){
+    let tm = location.pathname.split("/")[2];
+
+    Swal.fire({
+			title:"Enter Email, the member will be removed from the Group",
+			 input:'text',
+			showCancelButton:true,
+		}).then(function(data){
+			$.ajax({
+				url:`http://127.0.0.1:3000/removemember/${tm}`,
+				type:"POST",
+				data:data,
+				success:function(result){
+					 if(result=="done"){
+                         Swal.fire("Removed")
+                         location.reload();
+						 
+					 }else{
+                        alert("Not a member of this group")
+                         console.log("err");
+                     }
+				}
+			})
+		}
+		)
+	})
+
+
+$("#add_user").on('click',function(){
+
+    console.log("clicked")
+    let tm = location.pathname.split("/")[2];
+
+Swal.fire({
+			title:"Enter Email",
+			 input:'text',
+			showCancelButton:true,
+		}).then(function(data){
+			$.ajax({
+				url:`http://127.0.0.1:3000/addmember/${tm}`,
+				type:"POST",
+				data:data,
+				success:function(result){
+					 if(result=="done"){
+						 location.reload();
+					 }else{
+                         console.log("err");
+                     }
+				}
+			})
+		}
+		)
+	})
+
+
+
+
+$("#frm").on('submit',function(){
+event.preventDefault()
+
+
+
+
+
+let data={};
+var fd = new FormData($("#frm").get(0))
+
+
+/* to trace first message */
+
+
+var msg = $(".Discussion").children("p").length; 
+
+if(msg > 0){
+    alert("sending 2nd")
+    fd.append("imp",1);
+
+
+}
+let t = location.pathname.split("/")[2]
+
+fd.append("currentpage",t)
+
+if(document.querySelector("#mymessage").value &&document.querySelector("#up_file").files[0]){
+ 
+let elm_p = document.createElement("p");
+let element_p2 = document.createElement("p");
+elm_p.setAttribute("id","sent")
+element_p2.setAttribute("id","sent")
+elm_p.innerText=document.querySelector("#mymessage").value;
+element_p2.innerText=document.querySelector("#up_file").files[0].name;
+elm_img = document.createElement("a");
+let tmp  = "/users/"+a+t+document.querySelector("#up_file").files[0].name;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+
+elm_img.append(element_p2);
+let elm = document.querySelector(".Discussion");
+elm.append(elm_img)
+elm.append(elm_p)
+socket.emit("new message",{message:elm_p.innerText,group:t,filename:tmp})
+
+}else if(document.querySelector("#mymessage").value){
+   
+var  elm_p = document.createElement("p");
+elm_p.setAttribute("id","sent");
+elm_p.innerText=document.querySelector("#mymessage").value;
+let elm = document.querySelector(".Discussion");
+elm.append(elm_p)
+
+
+socket.emit("new message",{message:elm_p.innerText,group:t})
+
+
+
+
+}else{
+    let t = location.pathname.split("/")[2]
+elm_img = document.createElement("a");
+let element_p2 = document.createElement("p");
+element_p2.setAttribute("id","sent")
+
+let tmp  = "/users/"+a+t+document.querySelector("#up_file").files[0].name;
+
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+element_p2.innerText=document.querySelector("#up_file").files[0].name;
+elm_img.append(element_p2)
+let tmp_p=document.querySelector("#up_file").files[0].name;
+let elm = document.querySelector(".Discussion");
+
+elm.append(elm_img)
+socket.emit("new message",{filename:document.querySelector("#up_file").files[0].name,group:t})
+console.log("sent ",document.querySelector("#up_file").files[0].name)
+
+
+}
+
+
+$.ajax({
+url:"http://127.0.0.1:3000/incoming",
+method:"POST",
+processData: false,
+contentType: false,
+data:fd,
+success:function(data,status){
+    alert("done");
+}
+}
+)
+$("#frm")[0].reset();
+
+}
+)
+})
+
+
+
+
+
+</script>
+
+    
+            
+
+    
+        </script>
+            <link rel="stylesheet" href="/main.css">
+
+        <div id="wrapper">
+        
+        <div class="navig">
+            <div class="usr">
+        <img src="/thumbnail/user.png" width="90px" height="90px">
+        <p><%= notifications.name %></p>
+	<p id="role" style="font-weight: bold;"><%= notifications.role %></p>
+	<a id="log">Log Out</p>
+    </div>
+
+    
+        </div>
+        <p id="email"><%= notifications.email %></p>
+        <div class="edit">
+        <p id="grpname"><%= notifications.groupname %></p>
+        <a href="#" id="del">Delete</a> 
+        </div>
+
+
+        <div class="options">
+            <div class="Team">
+    <img src="/thumbnail/team.png" id="add_user" height="40px">
+    <p>Add </p>
+    </div>
+            <div class="files">
+    <img src="/thumbnail/image.png" id="showmefiles" height="40px">
+    <p>Files</p>
+    </div>
+    <div class="files">
+    <img src="/thumbnail/remove.png" id="remove" height="40px">
+    <p> Remove</p>
+    </div>
+    <div class="meeting">
+    <img src="/thumbnail/meeting.png" id="end" height="40px">
+    <p>End Discussion </p>
+    </div>
+    
+    
+    </div>
+    <div class="usersList">
+        <h1>Users</h1>
+        <% console.log("inside browser",locals.notifications.users) %>
+        <% if(locals.notifications.users) {%>
+            <% for(let i =0;i<notifications.users.length;i++){ %>
+            <p id="user"><%=notifications.users[i].memberemail %></p>
+            <% } %>
+             <% } %>
+
+    </div>
+    <div class="Discussion">
+        <%  if(!meeting || meeting==1){ %>
+            <% if(locals.data){  %>
+            <% for(let i=0;i<data.chats.length;i++) { %>
+               <% if(data.chats[i].from==email){ %>
+                <% console.log("lets see file",data.chats) %>
+                <% if(data.chats[i].file==1){ %>
+                   <a href="/group/<%=notifications.groupname %>/<%=data.chats[i].filename %>"><p id="sent"><%= data.chats[i].filename %></p></a>
+                    <% if(data.chats[i].msg){ %>
+                  <p id="sent"><%= data.chats[i].msg %></p>
+              <%  } }else{ %>
+                <p id="sent"><%= data.chats[i].msg %></p>
+             <% }   %>
+            
+           <% }else{ %>
+                <% if(data.chats[i].file==1){ %>
+                    <a href="/group/<%=notifications.groupname %>/<%=data.chats[i].filename %>"><p id="from"><%= data.chats[i].filename %></p></a>
+                    <% if(data.chats[i].msg){ %>
+                <Name><%= data.chats[i].name %></Name>  <p id="from"><%= data.chats[i].msg %></p>
+              <%  }}else{ %>
+                <Name><%= data.chats[i].name %></Name> <p id="from"><%= data.chats[i].msg %></p>
+              <% } %>
+
+               <% } %>
+
+            
+
+
+
+
+        <% } %>
+
+        <% } %>
+
+        <% } %>
+
+    
+       
+   
+        
+        
+
+   </div>
+   
+    
+    
+    
+    </div>
+    <form id="frm2" method="post" action="/checkpermission">
+    <input type="hidden" value="" name="groupname" id="groupname">
+    <button type="button" id="open">Click here to Start A text meeting </button>
+    </form>
+
+    <%  if(meeting ==5 || meeting==1){ %>
+    <form id="frm" action="">
+    <textarea id="mymessage" cols="118" rows="4" name="mymessage"></textarea>
+    <input type="image" id="upload" name="newfile" onclick="return false" src="/thumbnail/upload.png">
+       <input type="file" id="up_file" name="newfile" style="display: none;">
+    <input type="image" id="send" src="/thumbnail/send.png">
+    </form>
+    <% } %>
+
+    
+    <div class="notifications">
+    <button type="button" id="show_n">Notifications</button>
+
+    <span></span>
+        </div>
+        
+    
+    </div>
+    <div class="ShowNotifications" style="display: none;">
+        <% if(locals.notifications.notification){ %>
+            <% for(let i=0;i<notificaions.notification.length;i++){ %>
+        <p id="noti"> <%= notifications.notification[i].text %></p>
+            <% } %>
+        <% }else{ %>
+    
+            <p> This is A demo notificaion, users get notificaions for new meeting</p>
+        <% } %>
+
+    </div>
+    </body>
+</html>

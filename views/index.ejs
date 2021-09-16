@@ -1,0 +1,121 @@
+<html>
+<body>
+    <style>
+        body{
+  background-color: rgb(35, 163, 249);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px rgb(192, 193, 196) inset !important;
+ -webkit-text-fill-color: yellow !important;
+}
+.main{
+   position: absolute;
+   display: inline-block;
+   top: 20%;
+   left: 22%;
+   height: 400px;
+   width: 1000px;
+}
+#input_type{
+   color: black;
+   position: relative;
+   left:200px;
+   top:50px;
+   display: block;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   border-style: solid;
+   background-color: rgb(181, 176, 161);
+   width: 300px;
+   height: 50px;
+   outline: none;
+}
+
+#btn{
+    display: block;
+   position: relative;
+   left: 550px;
+   top: 20px;
+   background-color: beige;
+   width: 120px;
+   height:40px;
+
+   
+}
+ 
+.second{
+    position: absolute;
+    display: block;
+    width: 400px;
+    height: 80px;
+    left:100px;
+    font-weight: bold;
+}
+ #sup{
+display: block;
+position: relative;
+background-color: beige;
+width: 120px;
+height: 40px;
+top:1%;
+} */
+#note{
+    position: absolute;
+    bottom:1px;
+    font-weight: bold;
+}
+    </style>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        function check(){
+
+let x = document.getElementById("input_type").value;
+
+if(x.indexOf(' ')!=-1 || x.indexOf('/')){
+     Swal.fire("No spaces , use commaas to separate hashtags . only two allowed at the time")
+
+
+     return false;
+}else if(!x){
+    Swal.fire("Please enter value")
+
+    return false;
+
+}else{
+    return true;
+}
+}
+    </script>
+<link rel="stylesheet" href="style.css">
+
+<div class="second">
+<p id="login"> If you are new user </p>
+    
+<button  type="button" id="sup" onclick="location.href='/signup'">signup</button>
+
+</div>
+<div class="main"></p>
+    <% if(locals.created) {%>
+        <p> Account Created , You can Login</p>
+        <% }else{ %>
+    
+    <% } %>
+<form method="post" action="/login">
+    <select id="input_type" name="role">
+        <option value="admin">admin</option>
+        <option value="user">user</option>
+    </select>
+    <input type="text" id="input_type" placeholder="Email" name="email">
+    <input type="text" id="input_type" placeholder="Password" name="password">
+    <input type="submit" id="btn" value="Login">
+<!--<p> Login <input type="image" id="btn" src="button.png" width="50px" height="50px"> </p> -->
+
+</form>
+</div>
+</body>

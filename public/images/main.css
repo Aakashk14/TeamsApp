@@ -1,0 +1,228 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(223,227,238);
+}
+
+
+.usr{
+    position: absolute;
+    left: 13%;
+    top: 5%;
+    
+}
+ #wrapper{margin-left:auto;
+    margin-right:auto;
+    width:960px;
+}
+textarea{
+    resize: none;
+    border: 2px solid;
+    position: absolute;
+    top: 85%;
+    outline: none;
+    border-radius: 10px;
+    font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+
+    left: 12%;
+}
+
+.Discussion{
+    display: block;
+    position: absolute;
+    left: 12%;
+    top: 20%;
+    width: 50%;
+    height: 62%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border:3px solid #333333;
+        border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+
+}
+.Discussion::-webkit-scrollbar {
+  width: 10px;
+}
+.Discussion::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+.Discussion::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+.notifications{
+    position: absolute;
+    right: 6%;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  display: inline-block;
+  border-radius: 10px;
+
+}
+#open{
+    position: absolute;
+    left: 30%;
+    top: 88%;
+    background-color: red;
+}
+
+#log{
+    position: relative;
+    left: 17px;
+}
+.options{
+    position: absolute;
+    left: 35%;
+    top: 7%;
+    width: 50%;
+    display: block;
+}
+.team{
+    float: left;
+        font-family: Segoe UI;
+
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+.files{
+    float: left;
+    font-family: Segoe UI;
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+
+}
+.meeting{
+    float: left;
+        font-family: Segoe UI;
+
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+
+
+.navig{
+    display: block;
+    /*background-color:  rgb(7, 39,63); */
+    background-color: rgb(139,150,195);
+    position: absolute;
+    width: 10%;
+    left: 0px;
+    height: 100%;
+}
+.notifications button{
+    border: none;
+    font-family: Segoe UI;
+    background-color:  rgb(7, 39,63);
+    text-align: center;
+    height: 30px;
+    color: White;
+}
+#from{
+    display: block;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    color: white;
+        font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+        width: 50%;
+        height: 7%;
+    background-color: rgb(51,51,50);
+
+}
+
+#sent{
+    display: block;
+    background-color: yellow;
+        font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+      position: relative;
+      left: 65%;
+      margin-bottom: 20px;
+      width: 30%;
+      margin-right: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 7%;
+    margin-top: 20px;
+
+}
+
+.Discussion .from p{
+    display: block;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+        font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+
+    width: 50%;
+    color: white;
+    height: 7%;
+    position: relative;
+    left: 70px;
+    background-color: rgb(51,51,50);
+}
+
+.Discussion .to{
+    float: right;
+}
+
+.Discussion .to #p{
+    display: block;
+    margin-bottom: 20px;
+    background-color: red;
+    margin-right: 10px;
+    
+    font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+    
+   /* background-color:rgb(255,255,255);*/
+}
+
+
+.notifications span{
+    color: white;
+    position: absolute;
+    background-color: red;
+    left: 3px;
+    text-align: center;
+    width: 22px;
+    border-radius: 50%;
+}
+
+
+
+/*.Discussion .from p{
+    position: relative;
+    left:50px;
+    Display:block;
+} */
+.ShowNotifications{
+    position: absolute;
+    right: 2%;
+    top: 15%;
+    height: 80%;
+    display: block;
+    background-color:  rgb(7, 39,63);
+    width: 20%;
+    color: white;
+}
+.Discussion name{
+    font-family: Segoe UI;
+    font-weight: 700;
+}
+
+#send{
+    position: absolute;
+    top:86%;
+    left:1000px;
+}
+#upload{
+    position: absolute;
+    top:87%;
+    left:900px;
+}

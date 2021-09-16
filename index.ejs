@@ -1,0 +1,124 @@
+<html>
+<body>
+    <style>
+        body{
+  background-color: rgb(35, 163, 249);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px rgb(192, 193, 196) inset !important;
+ -webkit-text-fill-color: yellow !important;
+}
+.main{
+   position: absolute;
+   display: inline-block;
+   top: 20%;
+   left: 22%;
+   height: 400px;
+   width: 1000px;
+}
+#input_type{
+   color: black;
+   position: relative;
+   left:200px;
+   top:50px;
+   display: block;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   border-style: solid;
+   background-color: rgb(181, 176, 161);
+   width: 300px;
+   height: 50px;
+   outline: none;
+}
+
+#btn{
+   position: relative;
+   left: 550px;
+   top: 20px;
+}
+#login{
+width: 200px;
+height: 50px;
+text-align: center;
+
+}
+#sup{
+display: block;
+background-color: beige;
+width: 120px;
+height: 40px;
+}
+#note{
+    position: absolute;
+    bottom:1px;
+    font-weight: bold;
+}
+    </style>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(()=>{
+            $("#help").on('click',function(){
+                console.log("clicked")
+
+                Swal.fire({
+  
+  title: 'HOW-TO-DO',
+  html: "Signup As Admin <br> Create A Group  ,Invite a user <br> Ask user to signup as USER (Signup is needed as user from user email too)",
+
+                })})})
+
+        function check(){
+
+let x = document.getElementById("input_type").value;
+
+if(x.indexOf(' ')!=-1 || x.indexOf('/')){
+     Swal.fire("No spaces , use commaas to separate hashtags . only two allowed at the time")
+
+
+     return false;
+}else if(!x){
+    Swal.fire("Please enter value")
+
+    return false;
+
+}else{
+    return true;
+}
+}
+    </script>
+<link rel="stylesheet" href="style.css">
+
+<div class="Help">
+    <a href="#" id="help">Need Help?</a>
+</div>
+<div class="main"></p>
+
+    <% if(locals.created) {%>
+        <% console.log(locals.created){%>
+        <p> Account Created , You can Login</p>
+        <% }else{ %>
+    
+    <Main id="login"> If you are new user </Main>
+    
+    <button  type="button" id="sup" onclick="location.href='/signup'">signup</button>
+    <% } %>
+<form method="post" action="/login">
+    <select id="input_type" name="role">
+        <option value="admin">admin</option>
+        <option value="user">user</option>
+    </select>
+    <input type="text" id="input_type" placeholder="Email" name="email">
+    <input type="text" id="input_type" placeholder="Password" name="password">
+<p> Login <input type="image" id="btn" src="button.png" width="50px" height="50px"> </p>
+
+</form>
+</div>
+</body>

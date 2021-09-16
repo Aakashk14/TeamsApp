@@ -1,0 +1,592 @@
+<html>
+    <body>
+        <style>
+            html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(223,227,238);
+}
+
+
+.usr p{
+    margin-left: 28px;
+    max-width: 100px;
+    font-size: 18px;
+
+
+    
+
+}
+.usr a{
+    display: block;
+    position: fixed;
+    left:10px;
+    top:200px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(12, 5, 5);
+    color: rgb(216, 207, 207);
+    width: 80px;
+    padding-left: 20px;
+
+}
+.usr #role {
+    font-weight: bold;
+
+}
+ #wrapper{margin-left:auto;
+    margin-right:auto;
+    width:960px;
+}
+textarea{
+    resize: none;
+    border: 2px solid;
+    position: absolute;
+    top: 85%;
+    outline: none;
+    border-radius: 10px;
+    font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+
+    left: 12%;
+}
+
+.Discussion{
+    display: block;
+    position: absolute;
+    left: 12%;
+    top: 20%;
+    width: 50%;
+    height: 62%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border:3px solid #333333;
+        border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+
+}
+.Discussion::-webkit-scrollbar {
+  width: 10px;
+}
+.Discussion::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+.Discussion::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+.notifications{
+    position: absolute;
+    right: 6%;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  display: inline-block;
+  border-radius: 10px;
+
+}
+#open{
+    position: absolute;
+    left: 30%;
+    top: 88%;
+    background-color: red;
+}
+
+#log{
+    position: relative;
+    left: 17px;
+}
+.options{
+    position: absolute;
+    left: 35%;
+    top: 7%;
+    width: 50%;
+    display: block;
+}
+.team{
+    float: left;
+        font-family: Segoe UI;
+
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+.files{
+    float: left;
+    font-family: Segoe UI;
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+
+}
+.meeting{
+    float: left;
+        font-family: Segoe UI;
+
+    padding-left: 0px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+
+
+.navig{
+	display: block;
+	background-color: rgb(139,150,195);
+	position: fixed;
+	width: 150px;
+	height: 100%;
+    left:1px;
+}
+
+
+.notifications button{
+    border: none;
+    font-family: Segoe UI;
+    background-color:  rgb(7, 39,63);
+    text-align: center;
+    height: 30px;
+    color: White;
+}
+
+.Discussion .from p{
+    display: block;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+        font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+
+    width: 50%;
+    color: white;
+    height: 7%;
+    position: relative;
+    left: 70px;
+    background-color: rgb(51,51,50);
+}
+
+.Discussion .to{
+    float: right;
+}
+
+.edit{
+    position: fixed;
+    display: block;
+    background-color: rgb(156, 154, 154);
+    border-radius: 2px;
+    top:40px;
+    width: 200px;
+    height: 40px;
+    left:200px;
+   padding-left: 30px;
+   font-weight: bold;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.Discussion .to #p{
+    display: block;
+    margin-bottom: 20px;
+    background-color: red;
+    margin-right: 10px;
+    
+    font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+    
+   /* background-color:rgb(255,255,255);*/
+}
+
+
+.notifications span{
+    color: white;
+    position: absolute;
+    background-color: red;
+    left: 3px;
+    text-align: center;
+    width: 22px;
+    border-radius: 50%;
+}
+
+
+
+/*.Discussion .from p{
+    position: relative;
+    left:50px;
+    Display:block;
+} */
+#nomeet{
+    background-color: rgb(128, 119, 119);
+    position: absolute;
+    top:86%;
+    left:40%;
+    border-radius: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+}
+.ShowNotifications{
+    position: absolute;
+    right: 2%;
+    top: 15%;
+    height: 80%;
+    display: block;
+    background-color:  rgb(7, 39,63);
+    width: 20%;
+    color: white;
+}
+.Discussion name{
+    font-family: Segoe UI;
+    font-weight: 700;
+}
+
+#send{
+    position: absolute;
+    top:86%;
+    left:1000px;
+}
+#upload{
+    position: absolute;
+    top:87%;
+    left:900px;
+}
+
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+                        const socket = io();
+
+                        
+
+$(document).ready(function(){
+
+
+    $("#showmefiles").on('click',function(){
+    let p = location.pathname.split("/")[2];
+    location.href=p+"/files";
+})
+    
+    socket.on("end meeting",(group)=>{
+    socket.emit("closing",(group))
+    location.reload();
+})
+
+    socket.on("new message",(data)=>{
+        let n = document.createElement("name");
+    n.innerText=data.name;
+
+       
+
+
+if(data.file && data.message){
+   
+    let elm_p = document.createElement("p");
+let element_p2 = document.createElement("p");
+elm_p.setAttribute("id","from")
+element_p2.setAttribute("id","from")
+elm_p.innerText=data.message;
+element_p2.innerText=data.file;
+elm_img = document.createElement("a");
+let tmp  = "/users/"+data.file;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+
+elm_img.append(element_p2);
+let elm = document.querySelector(".Discussion");
+elm.append(n)
+elm.append(elm_img)
+elm.append(elm_p)
+
+}
+        if(data.file){
+
+let t = location.pathname.split("/")[2]
+elm_img = document.createElement("a");
+let element_p2 = document.createElement("p");
+element_p2.setAttribute("id","from")
+
+let tmp  = "/users/"+data.file;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+element_p2.innerText=data.file;
+elm_img.append(element_p2)
+let elm = document.querySelector(".Discussion");
+elm.append(n)
+elm.append(elm_img)
+console.log(elm_img)
+        
+
+        }
+        else{
+            let elm_p = document.createElement("p");
+            let elm_p2= document.createElement("p")
+elm_p.setAttribute("id","from")
+elm_p2.setAttribute("id","name");
+
+elm_p.innerText=data.message;
+
+
+
+let elm = document.querySelector(".Discussion");
+elm.append(n)
+elm.append(elm_p2)
+elm.append(elm_p)
+        }
+    })
+
+
+// Aakash | k14 divisor
+
+
+
+
+
+var x = document.querySelector(".Discussion");
+x.scrollTop = x.scrollHeight;
+
+
+$("#open").on('click',function(){
+    var main = $("#open")
+    var elmsg = $("#mymessage");
+    var snd = $("#send")
+    var upload = $("#upload")
+         $.ajax({
+          url:"/checkpermission",
+          method:"GET",
+          success:function(data,status){
+          if(data=="admin"){
+          socket.emit("new meeting");
+           main.remove();
+
+elmsg.removeAttr("style");
+snd.removeAttr("style");
+upload.removeAttr("style")
+
+}else{
+    console.log("no permission")
+}
+}
+         })
+
+})
+
+$("#show_n").on('click',function(){
+
+    console.log("clicked")
+    $(".showNotifications").toggle();
+    
+
+}
+)
+
+$("#upload").on('click',function(){
+$("input[id='up_file']").click();
+})
+
+
+
+$("#add_user").on('click',function(){
+Swal.fire("Enter Email");
+
+})
+
+
+$("#frm").on('submit',function(){
+event.preventDefault()
+
+
+
+
+let data={};
+var fd = new FormData($("#frm").get(0))
+
+
+/* to capture first message-->   */
+
+var msg = $(".Discussion").children("p").length; 
+let pt = location.pathname.split("/")[2]
+
+
+if(msg > 0){
+
+    socket.emit("First",pt)
+
+    fd.append("imp",1);
+}
+
+let t = location.pathname.split("/")[2]
+
+fd.append("currentpage",t)
+if(document.querySelector("#mymessage").value &&document.querySelector("#up_file").files[0]){
+    let elm_p = document.createElement("p");
+let element_p2 = document.createElement("p");
+elm_p.setAttribute("id","sent")
+element_p2.setAttribute("id","sent")
+elm_p.innerText=document.querySelector("#mymessage").value;
+element_p2.innerText=document.querySelector("#up_file").files[0].name;
+elm_img = document.createElement("a");
+let tmp  = "/users/"+document.querySelector("#up_file").files[0].name;
+let tmp_p  =document.querySelector("#up_file").files[0].name;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+
+elm_img.append(element_p2);
+console.log(elm_img)
+let elm = document.querySelector(".Discussion");
+console.log(elm)
+elm.append(elm_img)
+socket.emit("new message",{message:elm_p.innerText,group:t,filename:tmp_p})
+
+}else if(document.querySelector("#mymessage").value){
+let elm_p = document.createElement("p");
+elm_p.setAttribute("id","sent")
+elm_p.innerText=document.querySelector("#mymessage").value;
+let elm = document.querySelector(".Discussion");
+elm.append(elm_p);
+socket.emit("new message",{message:elm_p.innerText,group:pt})
+
+
+
+}else{
+    let t = location.pathname.split("/")[2]
+elm_img = document.createElement("a");
+let element_p2 = document.createElement("p");
+element_p2.setAttribute("id","sent")
+
+let tmp  = "/users/"+document.querySelector("#up_file").files[0].name;
+
+elm_img.setAttribute("href",tmp)
+elm_img.setAttribute("target","_blank")
+element_p2.innerText=document.querySelector("#up_file").files[0].name;
+elm_img.append(element_p2)
+let tmp_p=document.querySelector("#up_file").files[0].name;
+let elm = document.querySelector(".Discussion");
+
+elm.append(elm_img)
+socket.emit("new message",{filename:tmp_p,group:t})
+
+}
+
+
+$.ajax({
+url:"http://127.0.0.1:3000/incoming",
+method:"POST",
+processData: false,
+contentType: false,
+data:fd,
+success:function(data,status){
+    alert("done");
+}
+}
+)
+})
+})
+
+
+
+
+
+</script>
+
+    
+            
+
+    
+        </script>
+
+        <div id="wrapper">
+        <div class="navig">
+            <div class="usr">
+                <img src="/thumbnail/user.png" width="90px" height="90px">
+                <p><%= notifications.name %></p>
+                <p id="role" style="font-weight: bold;"><%= notifications.role %></p>
+                <a id="log" href="/logout">Log Out</a>
+            </div>
+    
+        </div>
+        <div class="options">
+           
+            <div class="files">
+    <img src="/thumbnail/image.png" id="showmefiles" height="40px">
+    <p>Files</p>
+    </div>
+    </div>
+    
+    
+    </div>
+
+    <div class="Discussion">
+ 
+        <%  if(!meeting || meeting==1){ %>
+            <% if(locals.data){  %>
+            <% for(let i=0;i<data.chats.length;i++) { %>
+               <% if(data.chats[i].from==email){ %>
+                <% if(data.chats[i].file==1){ %>
+                   <p id="sent"> <a href="/group/<%=notifications.groupname %>/<%=data.chats[i].filename %>"><%= data.chats[i].filename %></a></p>
+                    <% if(data.chats[i].msg){ %>
+                  <p id="sent"><%= data.chats[i].msg %></p>
+              <%  } }else{ %>
+                <p id="sent"><%= data.chats[i].msg %></p>
+             <% }   %>
+            
+           <% }else{ %>
+                <% if(data.chats[i].file==1){ %>
+                    <a href="t"><%= data.chats[i].filename %></a>
+                    <% if(data.chats[i].msg){ %>
+                  <p id="from"><%= data.chats[i].msg %></p>
+              <%  }}else{ %>
+                <p id="from"><%= data.chats[i].msg %></p>
+              <% } %>
+
+               <% } %>
+
+
+
+               <% } %>
+
+               <% } %>
+       
+               <% } %>
+       
+
+        
+    </div>
+    </div>
+
+    <% if(meeting==5 || meeting==1){ %>
+
+    <form id="frm" action="">
+
+    <textarea id="mymessage" cols="118" rows="4" name="mymessage"></textarea>
+    <input type="image" id="upload" name="newfile" onclick="return false" src="/thumbnail/upload.png">
+       <input type="file" id="up_file" name="newfile" style="display: none;">
+    <input type="image" id="send" src="/thumbnail/send.png">
+    </form>
+    <% } else{%>
+        <p id="nomeet"> there's no meeting right now</p>
+    <% } %>
+    
+    <div class="notifications">
+        
+     
+        <button type="button" id="show_n">Notifications</button>
+
+        
+    
+    </div>
+    <div class="ShowNotifications" style="display: none;">
+        <% if(locals.notifications.notificaion){ %>
+            <%  console.log(locals.notifications.notificaion) %>
+
+            <% for(let i=0;i<notificaions.notification.length;i++){ %>
+        <p id="noti"> <%= notifications.notification[i].text %></p>
+            <% } %>
+        <% }else{ %>
+    
+            <p> This is A demo notificaion, users get notificaions for new meeting</p>
+        <% } %>
+
+    </div>
+    </body>
+</html>

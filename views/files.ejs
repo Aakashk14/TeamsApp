@@ -1,0 +1,104 @@
+<html>
+
+<style>
+
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(223,227,238);
+}
+
+.navig{
+    display: block;
+    /*background-color:  rgb(7, 39,63); */
+    background-color: rgb(139,150,195);
+    position: absolute;
+    width: 10%;
+    left: 0px;
+    height: 100%;
+}
+
+.list{
+
+    display: block;
+    background-color: rgb(255, 255, 255);
+    width: 40%;
+    height:80%;
+    position: relative;
+    top:2%;
+    left:15%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.list a {
+    display: inline-block;
+    color: black;
+    background-color: rgb(190, 190, 202);
+    margin-top: 30px;
+    margin-left: 20px;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    max-width: 100px;
+    overflow-wrap: break-word;
+    
+
+}
+
+
+.settings{
+    display: block;
+    color:black;
+    background-color: rgb(218, 218, 226);
+    position: absolute;
+    left:60%;
+    width:20%;
+    height:40%;
+    top:10%;
+}
+</style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body>
+
+	<script type="text/javascript">
+		
+$(document).ready(()=>{
+
+	$("#btn").on('click',()=>{
+
+		location.href="/google"
+	})
+})
+
+	</script>
+
+
+	<div class="navig">
+	</div>
+
+   <div class="list">
+       <% if(locals.file){ %>
+        <% console.log(file) %>
+       <% for(let i=0;i<file.groupfiles.length;i++){ %>
+        <% let t= "/"+group+"/files" %>
+           <% let tmp = t+"/"+file.groupfiles[i].filename %>
+     <a href ="/group/<%=group %>/<%= file.groupfiles[i].filename %>" ><%= file.groupfiles[i].filename %></a>
+      <% } %>
+      <% } %>
+
+    
+</div>
+
+
+<div class="settings">
+
+</div>
+
+  
+</body>
+</html>

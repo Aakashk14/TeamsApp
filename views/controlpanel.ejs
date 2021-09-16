@@ -1,0 +1,69 @@
+<html>
+    <style>
+
+html,body{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+.navig{
+	display: block;
+	background-color:  rgb(7, 39,63);
+	position: absolute;
+	width: 10%;
+	height: 100%;
+}
+.main{
+	display: block;
+	background-color: rgb(255, 250, 250);
+
+	position: absolute;
+	top:20%;
+	left:20%;
+	width: 50%;
+	height: 60%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.main p{
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-left: 20px;
+	text-align: center;
+}
+.add{
+	position: absolute;
+	left:40%;
+	top:10%;
+}
+    </style>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script>
+		
+	</script>
+    <div class="navig">
+        <p>hellowlrd</p>
+    </div>
+<div class="add">
+	<form method="post" action="/addnewuser">
+	<input type="text" id="email" name="useremail" value="Enter Email">
+	<input type="submit">
+	</form>
+</div>
+<div class="main">
+	<div class="list">
+		<% if(relations){ %>
+		<% for(var i=0; i<relations.length;i++){ %>
+
+		<p><%= relations[i].name %> </p>
+		<% } %>
+		<% } %>
+
+	</div>
+	
+
+	</div>
+</body>
+</html>

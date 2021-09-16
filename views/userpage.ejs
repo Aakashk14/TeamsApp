@@ -1,0 +1,260 @@
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+
+html,body{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+
+/*.main{
+	position: absolute;
+display: block;
+background-color: rgb(32, 12, 12);
+width: 95%;
+height: 100px;
+left: 6%;
+top: 0px; */
+
+
+
+/* bar{
+	display: inline-block;
+	position: relative;
+	width: 10%;
+	float: right;
+	color: black;
+	text-align: center;
+	padding-top: 30px;
+	margin-right: 50px;
+	background-color: rgb(196,196,196);
+	height: 40px;
+
+} */
+.navig{
+	display: block;
+	background-color: rgb(139,150,195);
+	position: fixed;
+	width: 150px;
+	height: 100%;
+}
+p.main{
+	color: white;
+}
+.main_groups{
+	display:block;
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	height: 60%;
+	width:50%;
+
+}
+.notifications{
+    position: absolute;
+    right: 6%;
+	top:2%;
+	width: 100px;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  display: inline-block;
+  border-radius: 10px;
+
+}
+/*.main_groups p{
+	display: inline-block;
+	color: Black;
+	margin-right: 120px;
+	padding-right: 200px;
+	background-color: rgb(186, 184, 182);
+	position: relative;
+	height: 5%;
+	width: 12%;
+	background-color: red;
+	left: 0%;
+	border-style: double;
+	border-radius: 5px;
+	padding-left: 30px;
+	padding-top: 30px;
+	
+} */
+
+
+#grp{
+	display: block;
+	background-color: rgb(65, 62, 62);
+	color: white;
+	width: 25%;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	padding-top: 30px;
+	border-style: double;
+	padding-bottom: 30px;
+	text-align: center;
+	overflow: hidden;
+	height: 38px;
+	font-weight: bold;
+	font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+
+}
+
+.usr p{
+    margin-left: 28px;
+    max-width: 100px;
+    font-size: 18px;
+
+
+    
+
+}
+.usr #role {
+    font-weight: bold;
+
+}
+#email{
+    position: absolute;
+    left:15%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+.usr a{
+    display: block;
+    position: fixed;
+    left:10px;
+    top:200px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(12, 5, 5);
+    color: rgb(216, 207, 207);
+    width: 80px;
+    padding-left: 20px;
+
+}
+.notifications button{
+    border: none;
+    font-family: Segoe UI;
+    background-color:  rgb(7, 39,63);
+    text-align: center;
+    height: 30px;
+    color: White;
+}
+.ShowNotifications{
+    position: absolute;
+    right: 2%;
+    top: 15%;
+    height: 80%;
+    display: block;
+    background-color:  rgb(7, 39,63);
+    width: 20%;
+    color: white;
+}
+#note{
+	position: absolute;
+	left:30%;
+	font-size: 20px;
+}
+</style>
+
+<script>
+	$(document).ready(function(){
+		const socket = io();
+
+
+socket.emit('Aakash');
+		socket.on("Alert",(group,id)=>{
+
+			console.log("got one message",group)
+			let tmp = document.querySelector("#numbers").innerHTML;
+			 tmp = tmp+1;
+			 document.querySelector("#numbers").innerHTML=tmp;
+			let x = document.querySelector(".showNotifications")
+			let y  = document.createElement("p");
+			y.innerText="(Alert)"+group.groupname+" Admin started a meeting"
+
+			x.append(y);
+          console.log("emitting")
+			socket.emit("join me",group,id)
+
+		})
+
+
+$("#show_n").on('click',function(){
+	console.log("clicked")
+	$(".ShowNotifications").toggle()
+
+
+}
+
+)
+
+})
+function mygroup(){
+        var y = "/group/"+this.val();
+        location.href=y;
+    }
+    
+	function ch(){
+swal({
+	text: "Enter Group Name",
+	content:"input",
+	button:{
+		text:"Create",
+	}
+}).then(name=>{
+	if(!name) throw null;
+
+	return fetch('api?name=')
+})
+	}
+
+	</script>
+<body>
+	<div id="wrapper">
+
+	<div class="navig">
+		<div class="usr">
+			<img src="/thumbnail/user.png" width="90px" height="90px">
+			<p><%= group.name %></p>
+			<p id="role" style="font-weight: bold;"><%= group.role %></p>
+			<a id="log" href="/logout">Log Out</a>
+		</div>
+
+	</div>
+	<p id="email"><%= group.email %></p>
+
+	<p id="note"> Don't Forget to Check Notifications</p>
+
+	<div class="main_groups">
+        
+		<% if(locals.group.group) { %>
+			<% for(let i=0; i<group.group.length;i++) { %>
+				<% let tmp  = "/group/"+ group.group[i].groupname %>
+		<p id="grp" onclick="location.href='<%=tmp %>'" style="cursor:pointer;"> <%= group.group[i].groupname %></p>
+			<% } %>
+ 
+		<% } %>
+	</div>
+	<div class="notifications">
+		<button id="show_n" type="button">Notifications</button>
+		<% if(group.numer) {%>
+		<span id="numbers"><%= group.number %></span>
+			<% }else{ %>
+			<span id="numbers">0</span>
+			</div>
+		<% } %>
+</div>
+<div class="showNotifications" style="display: none;">
+	<% if(locals.notifications) {%>
+	<p> <%= group.notifications[0].text %></p>
+	<% } %>
+ 
+	</div>
+	</body>
+	</html>
