@@ -33,8 +33,8 @@ Installation
 ------------
 ```
  Install [node](http://nodejs.org/#download)
- git clone https://github.com/Aakashk14/TeamSpace
- cd Teamspace
+ git clone https://github.com/Aakashk14/TeamsApp
+ cd TeamsApp
  npm install
  node app.js
 
