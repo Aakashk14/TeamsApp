@@ -438,7 +438,7 @@ $("#frm")[0].reset();
     <form id="frm" action="">
     <textarea id="mymessage" cols="118" rows="4" name="mymessage"></textarea>
     <input type="image" id="upload" name="newfile" onclick="return false" src="/thumbnail/upload.png">
-       <input type="file" id="up_file" name="newfile" style="display: none;">
+       <input type="file" accept="image/*" id="up_file" name="newfile" style="display: none;">  <!-- no server validation -->
     <input type="image" id="send" src="/thumbnail/send.png">
     </form>
     <% } %>
